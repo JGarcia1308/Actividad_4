@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+  <title>AccuWeather API</title>
+</head>
+
+<body class="bg-primary">
+  <div class="container  px-4">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="card" style="width: 18rem;">
+            <img src="./img/logo.png" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">AccuWeather API</h5>
+              <p class="card-text">AccuWeather proporciona pronósticos por hora y minuto a minuto™ con una precisión™
+                superior
+                para cualquier longitud / latitud en la Tierra, con contenido personalizado y presentaciones de video
+                atractivas
+                disponibles en teléfonos inteligentes, tabletas, sitios de Internet gratuitos por cable y móviles,
+                televisores
+                conectados y dispositivos de Internet, así como a través de radio, televisión y periódicos.</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <div class="dropdown">
+                  <p>1 - Elija la Region Deseada:</p>
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="btnRegion"
+                    data-bs-toggle="dropdown" aria-expanded="false">Regiones
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="btnRegion" id="ulRegiones">
+                  </ul>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <div class="dropdown">
+                  <p>2 - Seleccione el País</p>
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="btnPais" data-bs-toggle="dropdown"
+                    aria-expanded="false">Paises
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="btnPais" id="ulPaises">
+                  </ul>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Seleccionar Dias</option>
+                  <option value="1">1</option>
+                  <option value="5">5</option>                  
+                </select>
+              </li>
+            </ul>
+
+            <div class="card-body">
+              <!-- <a href="#" class="card-link">Card link</a> -->
+              <a href="https://developer.accuweather.com/" class="card-link">Ir a AccuWeather</a>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <table class="table table-info">
+            <h1 id="city"></h1>
+            <thead>
+              <th scope="col">#</th>
+              <th scope="col">Fecha</th>
+              <th scope="col">Pronostico</th>
+              <th scope="col">Temp. Min.</th>
+              <th scope="col">Temp. Max.</th>
+            </thead>
+            <tbody class="table-hover" id="tablaContenido">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- You can also require other files to run in this process -->  
+  <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./js/renderer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "tested-star-foretell-59jgr",
+  "productName": "tested-star-foretell-59jgr",
+  "description": "My Electron application description",
+  "keywords": [],
+  "main": "./js/main.js",
+  "version": "1.0.0",
+  "author": "jed13",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^23.1.4"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.0-alpha1"
+  }
+}
