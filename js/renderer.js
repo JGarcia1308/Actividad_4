@@ -1,10 +1,3 @@
-/**
- * This file is loaded via the <script> tag in the index.html file and will
- * be executed in the renderer process for that window. No Node.js APIs are
- * available in this process because `nodeIntegration` is turned off and
- * `contextIsolation` is turned on. Use the contextBridge API in `preload.js`
- * to expose Node.js functionality from the main process.
- */
 
 let contenido = document.getElementById("tablaContenido");
 let listaPaises = document.getElementById("ulPaises");
@@ -12,10 +5,13 @@ let listaRegiones = document.getElementById("ulRegiones");
 const dropMenu1 = document.querySelector("#btnPais + .dropdown-menu");
 const dropMenu2 = document.querySelector("#btnRegion + .dropdown-menu");
 const selectElem = document.querySelector(".form-select");
+const btnGuardar = document.getElementById("guardarConsulta");
 let city = document.getElementById("city");
+let d = document.getElementById("fConsulta");
 const apiKey = 'H86T76bLyAop4ElcmbbMozOSzGug6bNb';
-const ciudad = 'Guatemala,GT';
 let p;
+let data;
+let f;
 
 function Consulta(n, p) {
   //Se realiza la consulta a la API
@@ -36,7 +32,7 @@ console.log(req)
     //La respuesta se convierte en JSON para su manipulación
     .then((res) => res.json())
     .then((resp) => {
-      let data = resp["DailyForecasts"];
+      data = resp["DailyForecasts"];
       let c = 0;
       for (let i = 0; i < data.length; i++) {
         let dia = data[i];
@@ -105,24 +101,26 @@ function ListaPaises(r) {
 
 Regiones();
 
+  d.addEventListener("change", (event)=>{
+    const dcSelected = d.valueAsDate;   
+    f = dcSelected.toISOString().split('T')[0];     
+    console.log('Dia: ' + f);
+  })
 
   dropMenu1.addEventListener("click", (event) => {
-    const selectedItem = event.target;
-  
-    const selectedText = selectedItem.textContent.trim();
+    const selectedItem = event.target;  
+    const selectedText = selectedItem.textContent;
     Pais(selectedText);    
   })
 
   dropMenu2.addEventListener("click", (event) => {
-    const selectedItem = event.target;
-  
+    const selectedItem = event.target;  
     const selectedText = selectedItem.textContent.trim();   
     ListaPaises(selectedText);
   })
  
   selectElem.addEventListener('change', (event) =>{
-    const selectedOption = event.target.value;
-    console.log(selectedOption);
+    const selectedOption = event.target.value;   ;
     Consulta(p, selectedOption);
   })
 
@@ -143,3 +141,45 @@ function Pais(pa) {
       console.log("p: " + p)
     });
 }
+
+function Guardar() {
+  console.log("click en Guardar", data);
+  window.communication.guardarDatos(data);
+}
+
+function Consultar() {
+  btnGuardar.disabled = true;
+  window.communication.consultarDatos(f);
+}
+
+window.communication.devuelveDatos((event, args) =>{
+  console.log('Renderer: '+ args); 
+  let data = JSON.parse(args)
+  for (let i = 0; i < data.length; i++) {
+    let dia = data[i];    
+    contenido.innerHTML +=
+      "<tr>" +
+      "<td>" +
+      dia["id"] +
+      "</td>" +
+      "<td>" +
+      dia["fecha"] +
+      "</td>" +
+      "<td>" +
+      dia["pronostico"] +
+      "</td>" +
+      "<td>" +
+      dia["temp_min"] +
+      " " +
+      dia["grados"] +
+      "°" +
+      "</td>" +
+      "<td>" +
+      dia["temp_max"] +
+      " " +
+      dia["grados"] +
+      "°" +
+      "</td>" +
+      "</tr>";
+  }
+})

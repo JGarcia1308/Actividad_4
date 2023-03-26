@@ -7,13 +7,8 @@
  */
 const {ipcRenderer, contextBridge} = require('electron');
 
-window.addEventListener('DOMContentLoaded', () => {
-  const replaceText = (selector, text) => {
-    const element = document.getElementById(selector)
-    if (element) element.innerText = text
-  }
-
-  for (const type of ['chrome', 'node', 'electron']) {
-    replaceText(`${type}-version`, process.versions[type])
-  }
+contextBridge.exposeInMainWorld('communication', {
+  guardarDatos: (data) => ipcRenderer.send('guardarDatos', data),
+  consultarDatos: (fecha) => ipcRenderer.send('consultarDatos', fecha),
+  devuelveDatos: (callback) => ipcRenderer.on('devuelveDatos',callback)
 })
